@@ -1,6 +1,6 @@
-export function functionUnpacker(filePath){
+module.exports = function functionUnpacker(filePath){
   
-  import * as fn from filePath;
+  let fn = require(filePath);
   let entryFn;
   
   if(Object.keys(fn) > 1){
@@ -17,4 +17,4 @@ export function functionUnpacker(filePath){
   }
   
   return fn;
-}
+};

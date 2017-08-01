@@ -1,9 +1,9 @@
 let shelljs = require('shelljs');
-let path = require('path')
+let path = require('path');
 
 
 export function builder(entryFn, cliName){
-  let outpath = ''//TODO GET OUTPATH
+  let outpath = '';//TODO GET OUTPATH
 
   let outfile = '';
 
@@ -17,7 +17,7 @@ export function builder(entryFn, cliName){
 ```
 var ${entryFnName} = ${entryFn.toString()};
 ${entryFnName}(...args);
-```
+```;
   
   // write file to the output. Just be a man and use fs module.
   
