@@ -1,4 +1,4 @@
-let shelljs = require('shelljs);
+let shelljs = require('shelljs');
 let path = require('path')
 
 
