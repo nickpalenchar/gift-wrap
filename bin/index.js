@@ -23,11 +23,12 @@ let filePath;
 console.log("WD ", shelljs.pwd().stdout);
 if(args["--file"]){
   let fileArg = args["--file"];
-  // absolute path logic
   if(/^[~\/]/.test(fileArg)){
+    // absolute path constructing
     filePath = fileArg;
   }
   else {
+    // relative path constructing
     filePath = path.join(shelljs.pwd().stdout, fileArg);
   }
 
@@ -36,6 +37,9 @@ if(args["--file"]){
 
   // unpack all functions in the file
 
-let entryFn = functionUnpacker('TODO: get path from args or interact');
+console.log("FILE PATH ", filePath);
+let entryFn = functionUnpacker(filePath);
+
+entryFn();
 
 
