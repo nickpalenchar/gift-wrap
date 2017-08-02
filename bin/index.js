@@ -15,6 +15,7 @@ process.argv.slice(2).forEach((arg) => {
 
 let shelljs = require('shelljs');
 let functionUnpacker = require('./functionUnpacker');
+let fs = require('fs');
 let path = require('path');
 let chalk = require('chalk');
 let prompt = require('cli-prompt');
@@ -23,6 +24,7 @@ let prompt = require('cli-prompt');
 let filePath;
 // A1 - user specified which file should be used
 console.log("WD ", shelljs.pwd().stdout);
+
 if(args["--file"]){
   let fileArg = args["--file"];
   if(/^[~\/]/.test(fileArg)){
@@ -33,12 +35,12 @@ if(args["--file"]){
     // relative path constructing
     filePath = path.join(shelljs.pwd().stdout, fileArg);
   }
+  unpackFunction(filePath);
 
 }
 else {
   // look for a single js file in the current directory
   let jsFiles = shelljs.ls().stdout.split('\n').filter(file => /.js$/.test(file));
-  console.log('the files available ', jsFiles);
 
   if(!jsFiles.length){
     console.log(chalk.red("ERROR: No file found!"));
@@ -53,12 +55,13 @@ else {
   if(jsFiles.length === 1){
     // only 1 file, use as the path.
     filePath = path.join(shelljs.pwd().stdout, jsFiles[0]);
-    console.log("FILEPATH ", filePath);
+    unpackFunction(filePath)
   }
 
-  else{
+  else {
     // more than one file. Prompt for choice.
-    multipleFilePrompt(jsFiles);
+    multipleFilePrompt(jsFiles)
+      .then( file => unpackFunction(path.join(shelljs.pwd().stdout, file)) );
   }
 
 }
@@ -71,20 +74,39 @@ else {
 //
 // entryFn();
 
+function unpackFunction(absolutePath){
+  // takes the absolute path of the js file and attempts to find the source function to be used.
+
+  if(!fs.existsSync(absolutePath)){
+    console.log(chalk.red("ERROR: FILE NOT FOUND. Could not find the file located at "),
+                chalk.yellow(absolutePath), chalk.red(". Make sure you're using the right path."));
+    process.exit(1);
+  }
+  console.log(chalk.green("beforeeee"));
+  let sourceFn = functionUnpacker(absolutePath);
+
+}
+
 function multipleFilePrompt(jsFiles){
 
   // used in prompt for file selection. Will only accept numbered values within the range of
-
   return new Promise((resolve,reject)=> {
     console.log(chalk.blue("Multiple JS files detected. Select the file you want by number:"));
+    console.log("jsfiles ssssss ### ", jsFiles);
     let fileList = jsFiles.map((file, i) => `${i+1}) ${file}`).join('\n');
     console.log(chalk.cyan(fileList));
     prompt("> ", data => {
-      console.log("You said ", data);
-      if(data === '1') {
-        resolve(data);
+      data = parseInt(data);
+
+      if(Number.isNaN(data)) {
+        console.log(chalk.red("Invalid response. Please enter only a number."));
+        return multipleFilePrompt(jsFiles);
       }
-      else return multipleFilePrompt(jsFiles);
+      if(data < 1 || data > fileList.length) {
+        console.log(chalk.red("Invalid response. Please enter a number between 1 and " + fileList.length));
+        return multipleFilePrompt(jsFiles);
+      }
+      return resolve(jsFiles[data-1]);
     });
   })
 
