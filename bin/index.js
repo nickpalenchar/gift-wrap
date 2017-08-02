@@ -17,6 +17,7 @@ let shelljs = require('shelljs');
 let functionUnpacker = require('./functionUnpacker');
 let path = require('path');
 let chalk = require('chalk');
+let prompt = require('cli-prompt');
 
 ////// A) Source File //////
 let filePath;
@@ -54,14 +55,37 @@ else {
     filePath = path.join(shelljs.pwd().stdout, jsFiles[0]);
     console.log("FILEPATH ", filePath);
   }
+
+  else{
+    // more than one file. Prompt for choice.
+    multipleFilePrompt(jsFiles);
+  }
+
 }
   // if (!fileName) error(file not found)
 
   // unpack all functions in the file
 
-console.log("FILE PATH ", filePath);
-let entryFn = functionUnpacker(filePath);
+// console.log("FILE PATH ", filePath);
+// let entryFn = functionUnpacker(filePath);
+//
+// entryFn();
 
-entryFn();
+function multipleFilePrompt(jsFiles){
 
+  // used in prompt for file selection. Will only accept numbered values within the range of
 
+  return new Promise((resolve,reject)=> {
+    console.log(chalk.blue("Multiple JS files detected. Select the file you want by number:"));
+    let fileList = jsFiles.map((file, i) => `${i+1}) ${file}`).join('\n');
+    console.log(chalk.cyan(fileList));
+    prompt("> ", data => {
+      console.log("You said ", data);
+      if(data === '1') {
+        resolve(data);
+      }
+      else return multipleFilePrompt(jsFiles);
+    });
+  })
+
+}
