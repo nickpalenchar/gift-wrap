@@ -15,6 +15,7 @@ process.argv.slice(2).forEach((arg) => {
 
 let shelljs = require('shelljs');
 let functionUnpacker = require('./functionUnpacker');
+let builder = require('./builder');
 let fs = require('fs');
 let path = require('path');
 let chalk = require('chalk');
@@ -82,10 +83,29 @@ function unpackFunction(absolutePath){
                 chalk.yellow(absolutePath), chalk.red(". Make sure you're using the right path."));
     process.exit(1);
   }
-  console.log(chalk.green("beforeeee"));
   let sourceFn = functionUnpacker(absolutePath);
 
+  getCLIName()
+    .then(name => builder(sourceFn))
+
 }
+
+function getCLIName(){
+  return new Promise(resolve => {
+    console.log(chalk.blue("Enter a name for your CLI"));
+
+    prompt("> ", data => {
+      if(/[^\w\d-]/g.test(data)){
+        console.log(chalk.red("INVALID RESPONSE: Please keep the name to letters, numbers, \"-\" and \"_\" (no spaces)"));
+        return getCLIName()
+      }
+
+      resolve(data);
+
+    })
+  })
+}
+
 
 function multipleFilePrompt(jsFiles){
 
