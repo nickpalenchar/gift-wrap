@@ -33,6 +33,16 @@ if(args["--file"]){
   }
 
 }
+else {
+  // look for a single js file in the current directory
+  let jsFiles = shelljs.ls().stdout.split('\n').filter(file => /.js$/.test(file));
+  console.log('the files available ', jsFiles);
+  if(jsFiles.length === 1){
+    // only 1 file, use as the path.
+    filePath = path.join(shelljs.pwd().stdout, jsFiles[0]);
+    console.log("FILEPATH ", filePath)
+  }
+}
   // if (!fileName) error(file not found)
 
   // unpack all functions in the file
