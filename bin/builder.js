@@ -1,7 +1,7 @@
 let shelljs = require('shelljs');
 let path = require('path');
 let exec = require('child_process').execSync;
-
+let fs = require('fs').writeFileSync;
 
 module.exports = function builder2(sourceFn, cliName){
   /** bootstraps the function to be used as cli. Grabs CLI arguments or text files and passes to the source function.
@@ -14,7 +14,7 @@ module.exports = function builder2(sourceFn, cliName){
 module.exports = function builder(entryFn, cliName){
 
   exec("rm -rf __output && mkdir __output");
-  let outpath = path.join(shelljs.pwd(), '__output');//TODO GET OUTPATH
+  let outpath = path.join(shelljs.pwd().stdout, '__output');//TODO GET OUTPATH
 
   let outfile = '';
 
@@ -23,14 +23,15 @@ module.exports = function builder(entryFn, cliName){
 
   //if the function is anonymous, need to assign it to a variable, which will be the reference to invoke
   let entryFnName = entryFn.name || "genericFn";
+  console.log("ENTRY FUNC ", entryFn);
+  outfile += "var " + entryFnName + " = "+entryFn.toString()+";\nvar fnRef = " + entryFnName;
+  console.log(2);
+
+  // add function wrapping and invokation.
+  outfile += shelljs.cat(path.join(__dirname, '/fragments/postFunc.js')).stdout;
+
+  // write file to the output. Just be a man and use fs module. //todo: WRITE IS AS FS ECHO IS TOO TRICKYY!!
   
-  outfile +=
-```
-var ${entryFnName} = ${entryFn.toString()};
-${entryFnName}(...args);
-var fnRef = ${entryFnName}
-```;
-  
-  // write file to the output. Just be a man and use fs module.
-  
+  outfile = outfile.replace(/"/g,"\\\"").replace(/\\/g,"\\\\");
+  exec(`cd ${outpath} && echo "${outfile}" > output.js && open .`)
 };
