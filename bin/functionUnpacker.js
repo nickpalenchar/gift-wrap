@@ -5,7 +5,15 @@ let fs = require('fs');
 
 module.exports = function functionUnpacker(filePath){
   console.log("file path heree ", filePath);
-  let fn = require(filePath);
+  try{
+    var fn = require(filePath);
+  }catch(e){
+    console.log(chalk.red("PARSE ERROR: Could not parse source file correctly"));
+    console.log(chalk.gray("please refer to URL for acceptable ways to write a function with this CLI. Original error below, which may provide " +
+      "more information"))//todo: acceptable function filse
+    console.log(e);
+    process.exit(1);
+  }
   console.log(">>>>> FN ", Object.keys(fn));
   let entryFn;
 
@@ -29,7 +37,7 @@ module.exports = function functionUnpacker(filePath){
   else {
     // case 3: vanilla javascript file. Concat into node module and then recursively call to require in.
     let template = "module.exports = " + shelljs.cat(filePath).stdout;
-    exec('mkdir ._temp');
+    exec('rm -rf ._temp && mkdir ._temp');
     let wd = shelljs.pwd().stdout;
     fs.writeFileSync(`${wd}/._temp/fn.js`, template);
 

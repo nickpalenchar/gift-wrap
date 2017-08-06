@@ -84,9 +84,10 @@ function unpackFunction(absolutePath){
     process.exit(1);
   }
   let sourceFn = functionUnpacker(absolutePath);
-
+  console.log("HERE???")
   getCLIName()
     .then(name => builder(sourceFn))
+    .catch(err => console.log(err));
 
 }
 
@@ -112,7 +113,6 @@ function multipleFilePrompt(jsFiles){
   // used in prompt for file selection. Will only accept numbered values within the range of
   return new Promise((resolve,reject)=> {
     console.log(chalk.blue("Multiple JS files detected. Select the file you want by number:"));
-    console.log("jsfiles ssssss ### ", jsFiles);
     let fileList = jsFiles.map((file, i) => `${i+1}) ${file}`).join('\n');
     console.log(chalk.cyan(fileList));
     prompt("> ", data => {
@@ -122,8 +122,9 @@ function multipleFilePrompt(jsFiles){
         console.log(chalk.red("Invalid response. Please enter only a number."));
         return multipleFilePrompt(jsFiles);
       }
-      if(data < 1 || data > fileList.length) {
-        console.log(chalk.red("Invalid response. Please enter a number between 1 and " + fileList.length));
+      console.log("FILELIST LENGTH?? ", typeof fileList);
+      if(data < 1 || data > jsFiles.length) {
+        console.log(chalk.red("Invalid response. Please enter a number between 1 and " + jsFiles.length));
         return multipleFilePrompt(jsFiles);
       }
       return resolve(jsFiles[data-1]);
