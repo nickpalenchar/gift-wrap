@@ -13,7 +13,7 @@ module.exports = function builder2(sourceFn, cliName){
 
 module.exports = function builder(entryFn, cliName){
 
-  exec("rm -rf __output && mkdir __output");
+  exec("rm -rf .__output && mkdir .__output");
   let outpath = path.join(shelljs.pwd().stdout, '__output');//TODO GET OUTPATH
 
   let outfile = '';
@@ -31,7 +31,7 @@ module.exports = function builder(entryFn, cliName){
   outfile += shelljs.cat(path.join(__dirname, '/fragments/postFunc.js')).stdout;
 
   // write file to the output. Just be a man and use fs module. //todo: WRITE IS AS FS ECHO IS TOO TRICKYY!!
-  
+
   outfile = outfile.replace(/"/g,"\\\"").replace(/\\/g,"\\\\");
   exec(`cd ${outpath} && echo "${outfile}" > output.js && open .`)
 };
