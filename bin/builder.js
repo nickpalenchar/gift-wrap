@@ -1,7 +1,7 @@
 let shelljs = require('shelljs');
 let path = require('path');
 let exec = require('child_process').execSync;
-let fs = require('fs').writeFileSync;
+let writeFileSync = require('fs').writeFileSync;
 
 module.exports = function builder2(sourceFn, cliName){
   /** bootstraps the function to be used as cli. Grabs CLI arguments or text files and passes to the source function.
@@ -33,5 +33,7 @@ module.exports = function builder(entryFn, cliName){
   // write file to the output. Just be a man and use fs module. //todo: WRITE IS AS FS ECHO IS TOO TRICKYY!!
 
   outfile = outfile.replace(/"/g,"\\\"").replace(/\\/g,"\\\\");
-  exec(`cd ${outpath} && echo "${outfile}" > output.js && open .`)
+  exec(`cd ${outpath}`);
+  writeFileSync('output.js', outfile);
+  exec(`open .`);
 };
