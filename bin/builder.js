@@ -14,7 +14,7 @@ module.exports = function builder2(sourceFn, cliName){
 module.exports = function builder(entryFn, cliName){
 
   exec("rm -rf .__output && mkdir .__output");
-  let outpath = path.join(shelljs.pwd().stdout, '__output');//TODO GET OUTPATH
+  let outpath = path.join(shelljs.pwd().stdout, '.__output');
 
   let outfile = '';
 
@@ -23,17 +23,16 @@ module.exports = function builder(entryFn, cliName){
 
   //if the function is anonymous, need to assign it to a variable, which will be the reference to invoke
   let entryFnName = entryFn.name || "genericFn";
-  console.log("ENTRY FUNC ", entryFn);
   outfile += "var " + entryFnName + " = "+entryFn.toString()+";\nvar fnRef = " + entryFnName;
   console.log(2);
 
   // add function wrapping and invokation.
   outfile += shelljs.cat(path.join(__dirname, '/fragments/postFunc.js')).stdout;
 
-  // write file to the output. Just be a man and use fs module. //todo: WRITE IS AS FS ECHO IS TOO TRICKYY!!
+  // write file to the output. Just be a man and use fs module. //todo: WRITE IS AS FS ECHO IS TOO TRICKYY!!-
 
-  outfile = outfile.replace(/"/g,"\\\"").replace(/\\/g,"\\\\");
-  exec(`cd ${outpath}`);
-  writeFileSync('output.js', outfile);
+  //outfile = outfile.replace(/"/g,"\\\"").replace(/\\/g,"\\\\");
+
+  writeFileSync('.__output/output.js', outfile);
   exec(`open .`);
 };

@@ -47,7 +47,7 @@ else {
     console.log(chalk.red("ERROR: No file found!"));
     console.log(chalk.grey("No JS files were found in the root of your directory (The directory you're currently in is "),
       chalk.yellow(shelljs.pwd().stdout));
-    console.log(chalk.grey("Run stocking-stuffer in the directory that contains the js file you want to use (the file should not be in a subdirectory)"));
+    console.log(chalk.grey("Run giftwrap in the directory that contains the js file you want to use (the file should not be in a subdirectory)"));
     console.log(chalk.grey("You can also use"), chalk.yellow("--file=path/to/file.js" ), chalk.grey("to explicity specify which file should be used\n"));
     process.exit(1);
 
