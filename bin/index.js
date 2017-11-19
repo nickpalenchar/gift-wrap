@@ -66,14 +66,6 @@ else {
   }
 
 }
-  // if (!fileName) error(file not found)
-
-  // unpack all functions in the file
-
-// console.log("FILE PATH ", filePath);
-// let entryFn = functionUnpacker(filePath);
-//
-// entryFn();
 
 function unpackFunction(absolutePath){
   // takes the absolute path of the js file and attempts to find the source function to be used.

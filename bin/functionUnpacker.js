@@ -4,7 +4,6 @@ let shelljs = require('shelljs');
 let fs = require('fs');
 
 module.exports = function functionUnpacker(filePath){
-  console.log("file path heree ", filePath);
   try{
     var fn = require(filePath);
   }catch(e){
@@ -14,7 +13,6 @@ module.exports = function functionUnpacker(filePath){
     console.log(e);
     process.exit(1);
   }
-  console.log(">>>>> FN ", Object.keys(fn));
   let entryFn;
 
   if(typeof fn === 'function'){

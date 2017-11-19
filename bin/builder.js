@@ -24,8 +24,6 @@ module.exports = function builder(entryFn, cliName){
   //if the function is anonymous, need to assign it to a variable, which will be the reference to invoke
   let entryFnName = entryFn.name || "genericFn";
   outfile += "var " + entryFnName + " = "+entryFn.toString()+";\nvar fnRef = " + entryFnName;
-  console.log(2);
-
   // add function wrapping and invokation.
   outfile += shelljs.cat(path.join(__dirname, '/fragments/postFunc.js')).stdout;
 
