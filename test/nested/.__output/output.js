@@ -1,22 +1,19 @@
+#!/bin/bash node
 let args = process.argv.slice(2);
 
-/** concat the function.
- *
- */
+// concat the function.
 
 //get params and construct arguments object
 var hello = function hello(name, name2) {
   console.log("hello ", name, "\nand ", name2);
 };
-var fnRef = hello
+var fnRef = hellolet shelljs = require('shelljs');
 // construct the arguments object from params
 
 let fnArgs = [],
   argsObject = {};
 
 let paramNames = fnRef.toString().match(/function.*\((.*)\)/)[1].replace(/\s/g,"").split(',');
-
-console.log("paramNAMESS##### ", paramNames);
 
 paramNames.forEach(paramName => argsObject[paramName] = undefined);
 

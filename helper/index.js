@@ -35,4 +35,4 @@ return new Promise((resolve,reject)=> {
     }
     return resolve(jsFiles[data-1]);
   });
-})
+});
