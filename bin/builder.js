@@ -11,7 +11,7 @@ module.exports = function builder2(sourceFn, cliName){
 
 };
 
-module.exports = function builder(entryFn, cliName){
+module.exports = function builder(entryFn, cliName='my-cli'){
 
   /**/console.log("cli-name >>>>>>> ", cliName);
 
@@ -34,12 +34,14 @@ module.exports = function builder(entryFn, cliName){
 
   //outfile = outfile.replace(/"/g,"\\\"").replace(/\\/g,"\\\\");
 
+
   writeFileSync('.__output/output.js', outfile);
   writeFileSync('.__output/package.json', outpackage);
-  exec(`open .`);
+  //exec(`open .`);
+  return cliName;
 };
 
-function buildPackageJson(pathToTemplate, name='my-cli'){
+function buildPackageJson(pathToTemplate, name){
   /** @param pathToTemplate {string} - where the package.json template is located.
    *  @param name - will replace all instances of %NAME% with the name.
    */

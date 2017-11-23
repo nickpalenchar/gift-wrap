@@ -7,7 +7,8 @@ let args = process.argv.slice(2);
 var hello = function hello(name, name2) {
   console.log("hello ", name, "\nand ", name2);
 };
-var fnRef = hellolet shelljs = require('shelljs');
+var fnRef = hello///////// START postFunc.js ///////////
+let shelljs = require('shelljs');
 // construct the arguments object from params
 
 let fnArgs = [],
@@ -46,3 +47,4 @@ args.forEach((arg,i) => {
 
 //invoke the function via the ref
 fnRef(...fnArgs);
+////////////// END postFunc.js ////////////////

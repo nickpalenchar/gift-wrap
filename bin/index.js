@@ -1,5 +1,13 @@
 #!/usr/bin/env node
 
+let shelljs = require('shelljs');
+let functionUnpacker = require('./functionUnpacker');
+let builder = require('./builder');
+let fs = require('fs');
+let path = require('path');
+let chalk = require('chalk');
+let prompt = require('cli-prompt');
+let { confirm } = require('../helper');
 /**
  * @flag --file - set = to path where the file is
  */
@@ -13,19 +21,11 @@ process.argv.slice(2).forEach((arg) => {
   return args[arg] = true;
 });
 
-let shelljs = require('shelljs');
-let functionUnpacker = require('./functionUnpacker');
-let builder = require('./builder');
-let fs = require('fs');
-let path = require('path');
-let chalk = require('chalk');
-let prompt = require('cli-prompt');
-
 ////// A) Source File //////
 let filePath;
-// A1 - user specified which file should be used
-console.log("WD ", shelljs.pwd().stdout);
+let file; // this is only used if a prompt for a file is needed (in the else statement)
 
+// A1 - user specified which file should be used
 if(args["--file"]){
   let fileArg = args["--file"];
   if(/^[~\/]/.test(fileArg)){
@@ -62,8 +62,18 @@ else {
   else {
     // more than one file. Prompt for choice.
     multipleFilePrompt(jsFiles)
-      .then( file => unpackFunction(path.join(shelljs.pwd().stdout, file)) );
+      .then( localFile => {
+        file = localFile;
+        filePath = path.join(shelljs.pwd().stdout);
+        unpackFunction(firePath, file);
+      } );
   }
+
+  // At this point the file has been written.
+  // npm link?
+  console.log(chalk.green("\ndone :)\n"));
+  console.log(chalk.blue("Would you like to enable running the CLI locally via npm link?"));
+  console.log(chalk.grey("(This will allow you to run the function anywhere by typing its name in the terminal and pressing enter)"));
 
 }
 
@@ -76,9 +86,12 @@ function unpackFunction(absolutePath){
     process.exit(1);
   }
   let sourceFn = functionUnpacker(absolutePath);
-  console.log("HERE???")
+  console.log("HERE???");
   getCLIName()
-    .then(name => builder(sourceFn))
+    .then(name => {
+      console.log('name is ', name);
+      return builder(sourceFn, name.replace(/\s/g,""))
+    })
     .catch(err => console.log(err));
 
 }
@@ -90,9 +103,9 @@ function getCLIName(){
     prompt("> ", data => {
       if(/[^\w\d-]/g.test(data)){
         console.log(chalk.red("INVALID RESPONSE: Please keep the name to letters, numbers, \"-\" and \"_\" (no spaces)"));
-        return getCLIName()
+        return getCLIName();
       }
-
+      console.log("resolving data ", data);
       resolve(data);
 
     })
