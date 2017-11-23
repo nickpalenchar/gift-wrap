@@ -7,7 +7,6 @@ let fs = require('fs');
 let path = require('path');
 let chalk = require('chalk');
 let prompt = require('cli-prompt');
-let { confirm } = require('../helper');
 /**
  * @flag --file - set = to path where the file is
  */
@@ -23,9 +22,8 @@ process.argv.slice(2).forEach((arg) => {
 
 ////// A) Source File //////
 let filePath;
-let file; // this is only used if a prompt for a file is needed (in the else statement)
-
 // A1 - user specified which file should be used
+
 if(args["--file"]){
   let fileArg = args["--file"];
   if(/^[~\/]/.test(fileArg)){
@@ -62,8 +60,7 @@ else {
   else {
     // more than one file. Prompt for choice.
     multipleFilePrompt(jsFiles)
-      .then( localFile => {
-        file = localFile;
+      .then( file => {
         filePath = path.join(shelljs.pwd().stdout);
         unpackFunction(firePath, file);
       } );
@@ -72,9 +69,7 @@ else {
   // At this point the file has been written.
   // npm link?
   console.log(chalk.green("\ndone :)\n"));
-  console.log(chalk.blue("Would you like to enable running the CLI locally via npm link?"));
-  console.log(chalk.grey("(This will allow you to run the function anywhere by typing its name in the terminal and pressing enter)"));
-
+  console.log('')
 }
 
 function unpackFunction(absolutePath){
@@ -90,7 +85,7 @@ function unpackFunction(absolutePath){
   getCLIName()
     .then(name => {
       console.log('name is ', name);
-      return builder(sourceFn, name.replace(/\s/g,""))
+      builder(sourceFn, name.replace(/\s/g,""))
     })
     .catch(err => console.log(err));
 
