@@ -1,7 +1,0 @@
-{
-  "name": "hello",
-  "versoin": "0.0.1",
-  "bin": {
-    "hello": "output.js"
-  }
-}
