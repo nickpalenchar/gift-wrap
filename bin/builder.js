@@ -8,7 +8,6 @@ module.exports = function builder2(sourceFn, cliName){
    * @param sourceFn {string} - ITS A STRING of the function. Weird I know but we're writing it to a js file.
    * @param cliName {string} - Name to be used for the cli
    */
-
 };
 
 module.exports = function builder(entryFn, cliName){
@@ -16,7 +15,7 @@ module.exports = function builder(entryFn, cliName){
 
   let outputDir = `${cliName}_output`;
   exec(`rm -rf ${outputDir} && mkdir ${outputDir}`);
-  let outpath = path.join(shelljs.pwd().stdout, outputDir);
+  let outpath = path.join(shelljs.pwd().Hstdout, outputDir);
 
   let outfile = '';
 
@@ -30,12 +29,12 @@ module.exports = function builder(entryFn, cliName){
   // add function wrapping and invokation.
   outfile += shelljs.cat(path.join(__dirname, '/fragments/postFunc.js')).stdout;
 
-  // write file to the output. Just be a man and use fs module. //todo: WRITE IS AS FS ECHO IS TOO TRICKYY!!-
-
-  //outfile = outfile.replace(/"/g,"\\\"").replace(/\\/g,"\\\\");
 
   writeFileSync(`${outputDir}/output.js`, outfile);
   writeFileSync(`${outputDir}/package.json`, outpackage);
+
+  console.log(chalk.blue("\nWould you like to link the binary via npm link?"));
+  console.log(chalk.grey("This will allow you to run the file simply by typing "));
   exec(`open .`);
 };
 
