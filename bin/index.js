@@ -76,9 +76,9 @@ function unpackFunction(absolutePath){
     process.exit(1);
   }
   let sourceFn = functionUnpacker(absolutePath);
-  console.log("HERE???")
+  console.log("HERE???");
   getCLIName()
-    .then(name => builder(sourceFn))
+    .then(name => builder(sourceFn, name))
     .catch(err => console.log(err));
 
 }
