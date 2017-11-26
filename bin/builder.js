@@ -13,8 +13,6 @@ module.exports = function builder2(sourceFn, cliName){
 
 module.exports = function builder(entryFn, cliName){
 
-  /**/console.log("cli-name >>>>>>> ", cliName);
-
   exec("rm -rf .__output && mkdir .__output");
   let outpath = path.join(shelljs.pwd().stdout, '.__output');
 

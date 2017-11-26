@@ -1,7 +1,7 @@
 {
-  "name": "my-cli",
+  "name": "hello",
   "versoin": "0.0.1",
   "bin": {
-    "my-cli": "output.js"
+    "hello": "output.js"
   }
 }
