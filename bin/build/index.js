@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+console.log("BUILD IS RUNNING ");
 // BUILD
 // the main process. Called implicitly with `giftwrap`. This is the main process that builds the script into a cli.
 
