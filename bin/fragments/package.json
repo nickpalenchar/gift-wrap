@@ -1,6 +1,6 @@
 {
   "name": "%NAME%",
-  "versoin": "0.0.1",
+  "version": "0.0.1",
   "bin": {
     "%NAME%": "output.js"
   }

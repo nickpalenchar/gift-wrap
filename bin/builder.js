@@ -12,9 +12,11 @@ module.exports = function builder2(sourceFn, cliName){
 };
 
 module.exports = function builder(entryFn, cliName){
+  cliName = cliName || 'my-cli';
 
-  exec("rm -rf .__output && mkdir .__output");
-  let outpath = path.join(shelljs.pwd().stdout, '.__output');
+  let outputDir = `${cliName}_output`;
+  exec(`rm -rf ${outputDir} && mkdir ${outputDir}`);
+  let outpath = path.join(shelljs.pwd().stdout, outputDir);
 
   let outfile = '';
 
@@ -32,8 +34,8 @@ module.exports = function builder(entryFn, cliName){
 
   //outfile = outfile.replace(/"/g,"\\\"").replace(/\\/g,"\\\\");
 
-  writeFileSync('.__output/output.js', outfile);
-  writeFileSync('.__output/package.json', outpackage);
+  writeFileSync(`${outputDir}/output.js`, outfile);
+  writeFileSync(`${outputDir}/package.json`, outpackage);
   exec(`open .`);
 };
 

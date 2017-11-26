@@ -85,7 +85,7 @@ function unpackFunction(absolutePath){
 
 function getCLIName(){
   return new Promise(resolve => {
-    console.log(chalk.blue("Enter a name for your CLI"));
+    console.log(chalk.blue("Enter a name for your CLI.") + chalk.grey(" default: | my-cli |"));
 
     prompt("> ", data => {
       if(/[^\w\d-]/g.test(data)){
