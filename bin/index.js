@@ -5,7 +5,8 @@ let { fork, exec } = require('child_process'),
   chalk = require('chalk'),
   say = require('../helper/say'),
   confirm = require('../helper').confirm,
-  shelljs = require('shelljs');
+  shelljs = require('shelljs'),
+  argvee = require('argvee')();
 
 // see if there is a command
 let command, args;
