@@ -7,6 +7,19 @@ let { fork, exec } = require('child_process'),
   confirm = require('../helper').confirm,
   shelljs = require('shelljs');
 
+let argv = require('argvee')();
+
+
+// PARSE OPTIONS
+// matches all -`x` options into `__flag`, and long flags into a key of their own name
+// (eg `--foo` will be on OPTIONS.foo
+
+(commandStr.match(/--(\S+)/g) || []).forEach(option => {
+  option = option.split("=");
+  global.OPTIONS[option[0].slice(2)] = option[1];
+});
+
+console.log('the options ', OPTIONS );
 // see if there is a command
 let command, args;
 if (/^-/.test(process.argv[2]) || !process.argv[2]) {

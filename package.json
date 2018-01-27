@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/nickpalenchar/gift-wrap#readme",
   "dependencies": {
+    "argvee": "^0.1.1",
     "chalk": "^2.0.1",
     "cli-prompt": "^0.6.0",
     "path": "^0.12.7",
