@@ -2,6 +2,7 @@ let shelljs = require('shelljs');
 let path = require('path');
 let exec = require('child_process').execSync;
 let writeFileSync = require('fs').writeFileSync;
+let chalk = require('chalk');
 
 module.exports = function builder2(sourceFn, cliName){
   /** bootstraps the function to be used as cli. Grabs CLI arguments or text files and passes to the source function.
@@ -15,7 +16,7 @@ module.exports = function builder(entryFn, cliName){
 
   let outputDir = `${cliName}_output`;
   exec(`rm -rf ${outputDir} && mkdir ${outputDir}`);
-  let outpath = path.join(shelljs.pwd().Hstdout, outputDir);
+  let outpath = path.join(shelljs.pwd().stdout, outputDir);
 
   let outfile = '';
 
@@ -29,9 +30,13 @@ module.exports = function builder(entryFn, cliName){
   // add function wrapping and invokation.
   outfile += shelljs.cat(path.join(__dirname, '/fragments/postFunc.js')).stdout;
 
-
+  console.log('ENTRY FN NAMEE ', entryFnName);
   writeFileSync(`${outputDir}/output.js`, outfile);
   writeFileSync(`${outputDir}/package.json`, outpackage);
+  exec(`mkdir /usr/local/giftwrap/clis/${cliName}`);
+  writeFileSync(`/usr/local/giftwrap/clis/${cliName}/output.js`, outfile);
+  writeFileSync(`/usr/local/giftwrap/clis/${cliName}/package.json`, outpackage);
+
 
   console.log(chalk.blue("\nWould you like to link the binary via npm link?"));
   console.log(chalk.grey("This will allow you to run the file simply by typing "));

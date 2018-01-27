@@ -1,0 +1,7 @@
+{
+  "name": "hhuhhu",
+  "version": "0.0.1",
+  "bin": {
+    "hhuhhu": "output.js"
+  }
+}
