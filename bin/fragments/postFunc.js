@@ -1,4 +1,4 @@
-let shelljs = require('shelljs');
+;
 // construct the arguments object from params
 
 let fnArgs = [],

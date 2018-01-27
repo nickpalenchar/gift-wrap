@@ -7,7 +7,8 @@ let args = process.argv.slice(2);
 var hello = function hello(name, name2) {
   console.log("hello ", name, "\nand ", name2);
 };
-var fnRef = hellolet shelljs = require('shelljs');
+var fnRef = hello
+;
 // construct the arguments object from params
 
 let fnArgs = [],
