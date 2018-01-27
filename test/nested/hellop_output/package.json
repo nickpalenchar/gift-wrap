@@ -1,0 +1,7 @@
+{
+  "name": "hellop",
+  "version": "0.0.1",
+  "bin": {
+    "hellop": "output.js"
+  }
+}

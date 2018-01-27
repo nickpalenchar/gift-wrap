@@ -2,6 +2,7 @@ let shelljs = require('shelljs');
 let path = require('path');
 let exec = require('child_process').execSync;
 let writeFileSync = require('fs').writeFileSync;
+let chalk = require('chalk');
 
 module.exports = function builder2(sourceFn, cliName){
   /** bootstraps the function to be used as cli. Grabs CLI arguments or text files and passes to the source function.
@@ -15,7 +16,7 @@ module.exports = function builder(entryFn, cliName){
 
   let outputDir = `${cliName}_output`;
   exec(`rm -rf ${outputDir} && mkdir ${outputDir}`);
-  let outpath = path.join(shelljs.pwd().Hstdout, outputDir);
+  let outpath = path.join(shelljs.pwd().stdout, outputDir);
 
   let outfile = '';
 
