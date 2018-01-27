@@ -42,6 +42,7 @@ catch (e) {
     .then(res => {
       options.show_hints = res;
       let out = exec('touch /usr/local/giftwrap/options.json').stdout;
+      exec('mkdir clis');
       console.log(out);
       fs.writeFileSync('/usr/local/giftwrap/options.json', JSON.stringify(options));
     })
