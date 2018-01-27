@@ -46,13 +46,13 @@ catch (e) {
   let options = require('../../var/defaultOptions');
   say.info("creating directory in /usr/local");
   exec('mkdir /usr/local/giftwrap');
+  exec('mkdir /usr/local/giftwrap/clis');
   say.ask('Would you like hints to be shown as you use giftwrap? (you can change this later by running `giftwrap options`');
   say.hint('Hint text looks like this and is recommended for beginners.');
   confirm()
     .then(res => {
       options.show_hints = res;
       let out = exec('touch /usr/local/giftwrap/options.json').stdout;
-      exec('mkdir clis');
       //console.log(out);
       fs.writeFileSync('/usr/local/giftwrap/options.json', JSON.stringify(options));
     })

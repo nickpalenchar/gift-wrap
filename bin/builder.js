@@ -30,9 +30,13 @@ module.exports = function builder(entryFn, cliName){
   // add function wrapping and invokation.
   outfile += shelljs.cat(path.join(__dirname, '/fragments/postFunc.js')).stdout;
 
-
+  console.log('ENTRY FN NAMEE ', entryFnName);
   writeFileSync(`${outputDir}/output.js`, outfile);
   writeFileSync(`${outputDir}/package.json`, outpackage);
+  exec(`mkdir /usr/local/giftwrap/clis/${cliName}`);
+  writeFileSync(`/usr/local/giftwrap/clis/${cliName}/output.js`, outfile);
+  writeFileSync(`/usr/local/giftwrap/clis/${cliName}/package.json`, outpackage);
+
 
   console.log(chalk.blue("\nWould you like to link the binary via npm link?"));
   console.log(chalk.grey("This will allow you to run the file simply by typing "));
