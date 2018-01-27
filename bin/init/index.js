@@ -7,6 +7,7 @@ let { fork, exec } = require('child_process'),
   chalk = require('chalk'),
   fs = require('fs');
 
+let argvee = require('argvee')();
 // INIT
 // creates a dir in /usr/local named giftwrap for persisting options, if no dir exists
 /** @flag -f overwrites the file permanently.
@@ -17,6 +18,15 @@ say.hint('This is usually a one time process--giftwrap need a place to save your
   'The best place for this is in the /usr/local space. You can re-run this by running `giftwrap init`');
 
 try {
+
+  // CASE 0: -f is used. Remove any giftwrap and defer to case 3
+  if(argvee.mode('f')) {
+    console.log('BEFORE');
+    exec('rm -rf /usr/local/giftwrap');
+    console.log('AFTER')
+    throw 1; // yes I'm using a GOTO deal with it :)
+  }
+
   if (statSync('/usr/local/giftwrap').isDirectory()) {
     // CASE 1: Directory already exists
     say.err("config directory already exists!");
@@ -42,7 +52,8 @@ catch (e) {
     .then(res => {
       options.show_hints = res;
       let out = exec('touch /usr/local/giftwrap/options.json').stdout;
-      console.log(out);
+      exec('mkdir clis');
+      //console.log(out);
       fs.writeFileSync('/usr/local/giftwrap/options.json', JSON.stringify(options));
     })
     .then(() => {

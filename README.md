@@ -6,7 +6,6 @@ Interactive CLI to publish functions as their own CLI (meta I know)
 
 - Cli name: name of the cli to be created duoy.
 
-
 ## Persistant data.
 
 Giftwrap uses a created directory. `usr/local/giftwrap`. Somethings that exist.
