@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-let { fork, exec } = require('child_process'),
+let { fork, exec, spawn } = require('child_process'),
   path = require('path'),
   statSync = require('fs').statSync,
   chalk = require('chalk'),
@@ -25,4 +25,5 @@ if(!shelljs.ls('/usr/local').includes('giftwrap')){
   command = 'init';
   args = [];
 }
+console.log('TIME TO RUN WITH THESE ARGS ', args);
 fork(path.join(__dirname, command), args);

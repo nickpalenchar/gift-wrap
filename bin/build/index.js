@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-console.log("BUILD IS RUNNING ");
+console.log("BUILD IS RUNNING ", process.argv);
 // BUILD
 // the main process. Called implicitly with `giftwrap`. This is the main process that builds the script into a cli.
 
@@ -8,14 +8,15 @@ console.log("BUILD IS RUNNING ");
  * @flag --file - set = to path where the file is
  */
 
+
 let args = {};
-process.argv.slice(2).forEach((arg) => {
-  if(/[\w-]+=\w+/.test(arg)) {
-    let [key, value] = arg.split("=");
-    return args[key] = value;
-  }
-  return args[arg] = true;
-});
+// process.argv.slice(2).forEach((arg) => {
+//   if(/[\w-]+=\w+/.test(arg)) {
+//     let [key, value] = arg.split("=");
+//     return args[key] = value;
+//   }
+//   return args[arg] = true;
+// });
 
 let shelljs = require('shelljs');
 let functionUnpacker = require('../functionUnpacker');
@@ -88,6 +89,19 @@ function unpackFunction(absolutePath){
 }
 
 function getCLIName(){
+
+  // CASE 0: --name flag provided, see if there is a name to use.
+  console.log("COMMANDS ", argv.commands);
+  if(argv.command('name')){
+    let name = argv.param('name')[0];
+    // ensure value is truthy
+    if(name){
+      return new Promise(resolve => {
+        resolve(name);
+      })
+    }
+  }
+
   return new Promise(resolve => {
     console.log(chalk.blue("Enter a name for your CLI.") + chalk.grey(" default: | my-cli |"));
 
@@ -105,7 +119,6 @@ function getCLIName(){
 
 
 function multipleFilePrompt(jsFiles){
-
   // used in prompt for file selection. Will only accept numbered values within the range of
   return new Promise((resolve,reject)=> {
     console.log(chalk.blue("Multiple JS files detected. Select the file you want by number:"));
