@@ -4,12 +4,13 @@ let shelljs = require('shelljs');
 let fs = require('fs');
 
 module.exports = function functionUnpacker(filePath){
+  let fn;
   try{
-    var fn = require(filePath);
+    fn = require(filePath);
   }catch(e){
     console.log(chalk.red("PARSE ERROR: Could not parse source file correctly"));
     console.log(chalk.gray("please refer to URL for acceptable ways to write a function with this CLI. Original error below, which may provide " +
-      "more information"))//todo: acceptable function filse
+      "more information")); //todo: acceptable function filse
     console.log(e);
     process.exit(1);
   }

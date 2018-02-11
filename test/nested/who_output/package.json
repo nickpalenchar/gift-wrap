@@ -1,0 +1,7 @@
+{
+  "name": "who",
+  "version": "0.0.1",
+  "bin": {
+    "who": "output.js"
+  }
+}

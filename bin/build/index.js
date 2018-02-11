@@ -61,8 +61,10 @@ else {
 
   else {
     // more than one file. Prompt for choice.
-    multipleFilePrompt(jsFiles)
-      .then(file => unpackFunction(path.join(shelljs.pwd().stdout, file)));
+    multipleFilePrompt(jsFiles, file=>{
+      unpackFunction(path.join(shelljs.pwd().stdout,file))
+    });
+
   }
 
 }
@@ -113,7 +115,7 @@ function getCLIName() {
 }
 
 
-function multipleFilePrompt(jsFiles) {
+function multipleFilePrompt(jsFiles, nextFuncToRun) {
   // used in prompt for file selection. Will only accept numbered values within the range of
   return new Promise((resolve, reject) => {
     console.log(chalk.blue("Multiple JS files detected. Select the file you want by number:"));
@@ -124,14 +126,15 @@ function multipleFilePrompt(jsFiles) {
 
       if (Number.isNaN(data)) {
         console.log(chalk.red("Invalid response. Please enter only a number."));
-        return multipleFilePrompt(jsFiles);
+        return multipleFilePrompt(jsFiles, nextFuncToRun);
       }
-      console.log("FILELIST LENGTH?? ", typeof fileList);
       if (data < 1 || data > jsFiles.length) {
         console.log(chalk.red("Invalid response. Please enter a number between 1 and " + jsFiles.length));
-        return multipleFilePrompt(jsFiles);
+        return multipleFilePrompt(jsFiles, nextFuncToRun);
       }
-      return resolve(jsFiles[data - 1]);
+      let file = jsFiles[data -1 ];
+      return nextFuncToRun(jsFiles[data - 1]);
+     // resolve(jsFiles[data-1]);
     });
   })
 

@@ -1,16 +1,14 @@
 let { fork, exec } = require('child_process'),
   shelljs = require('shelljs'),
   path = require('path'),
-  say = require('../../helper/say');
+  say = require('../../helper/say'),
+  chalk = require('chalk');
 
 // RUN
 // runs a stored cli, passing subsequent arguments to the cli.
 
-console.log(process.argv);
-
 let availableClis = shelljs.ls('/usr/local/giftwrap/clis').stdout.split('\n').slice(0,-1);
 let cliToRun = process.argv[2];
-console.log('TO RUN ', cliToRun);
 
 if(availableClis.includes(cliToRun)){
   // RUN THE CLI
@@ -19,9 +17,11 @@ if(availableClis.includes(cliToRun)){
 else {
   say.err("No CLI of that name found.");
   say.hint("Make sure you spelled it correctly, including proper capitalization");
-  say.hint("Run `giftwrap ls` to see the available clis you can run");
-}
+  say.hint(chalk.underline("\nCurrently available clis are: "));
 
-console.log(availableClis);
+  availableClis.forEach(cliName => say.hint(chalk.yellow(cliName)));
+
+  say.hint("\nRun `giftwrap ls` to see the available clis you can run");
+}
 
 //if(availableClis)
