@@ -1,0 +1,7 @@
+{
+  "name": "helooooCUSTOM",
+  "version": "0.0.1",
+  "bin": {
+    "helooooCUSTOM": "output.js"
+  }
+}

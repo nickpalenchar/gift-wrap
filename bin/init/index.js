@@ -58,8 +58,9 @@ catch (e) {
         confirm()
             .then(res => {
                 options.show_hints = res;
-                let out = exec('touch /usr/local/giftwrap/options.json').stdout;
-                //console.log(out);
+                let out = exec('touch /usr/local/giftwrap/options.json', (err, stdout, stderr) => {
+                });
+
                 fs.writeFileSync('/usr/local/giftwrap/options.json', JSON.stringify(options));
             })
             .then(() => {
