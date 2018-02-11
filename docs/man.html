@@ -30,7 +30,7 @@ Running init will initialize giftwrap so that it can save cli's you create local
 
 <table>
   <tr>
-    <td><code>-f</code></td>
+    <td style="width: 48px;"><code>-f</code></td>
     <td>Reinitializes giftwrap, overwritting any settings and saved CLI's that might have already been made.</td>
   </tr>
 </table>
@@ -53,4 +53,7 @@ giftwrap [build] [--name=name] [--file=...path]
 </code>
 </pre>
 
-<h4></h4>
+<h4>Description</h4>
+
+Running <code>giftwrap</code> in the root of where a file containing a javascript function is will begin the process of converting a javascript function into a cli, which can be ran in the terminal or published to npm. Interactive prompts will help giftwrap determine how the function should be converted. This is the heart of giftwrap!
+
