@@ -11,7 +11,7 @@
 <code class="javascript">
 // hello.js
 function hello(name="world", greeter="computer"){
-  console.log(`Hello ${name}! My name is ${greeter}`);
+  console.log(`Hello ${name}! My name is ${greeter}\n`);
 }
 </code>
 </pre>
@@ -30,3 +30,40 @@ Or:
 $ giftwrap --file=path/to/hello.js --cli-name=greet
 </code>
 </pre>
+
+You now have a cli named <code>greet</code>, that you can use, passing custom arguments!
+
+<pre>
+<code class="shell">
+$ greet Nick 'gift wrap' # positional arguments
+Hello, Nick! my name is gift wrap
+
+$ greet --greeter='gift wrap' # you can name arguments based on parameters from the js (camelCase converted to snake-case)
+Hello world! my name is gift wrap
+
+$ greet --name=path/to/myName.txt --greeter=/absolute/path/to/greeter.txt # you can pass files (parsed as strings) with named arguments
+Hello, Nick! my name is gift wrap
+
+$ greet --name='twitter/palencharizard' # use quotes to pass arguments with slashes to avoid parsing as file path
+Hello, twitter/palencharizard! my name is gift wrap
+</code>
+</pre>
+
+<h3>Getting started</h3>
+
+Get the CLI.
+
+<pre>
+<code class="shell">
+$ npm i -g @npalenchar/giftwrap
+</code>
+</pre>
+
+Let giftwrap set itself up
+<pre>
+<code class="shell">
+$ [sudo] giftwrap
+</code>
+</pre>
+
+After that, run wherever you want to turn a js function into a CLI! giftwrap will walk you through the process and prompt you when needed. But if you'd like to get more in depth, visit the <a href="man.html">API Page</a>.

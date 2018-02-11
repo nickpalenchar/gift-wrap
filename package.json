@@ -1,5 +1,5 @@
 {
-  "name": "giftwrap",
+  "name": "@npalenchar/giftwrap",
   "version": "0.9.0",
   "description": "Interactive CLI to publish functions as their own CLI (meta I know)",
   "main": "index.js",
