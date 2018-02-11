@@ -12,6 +12,8 @@ module.exports = function builder2(sourceFn, cliName){
 };
 
 module.exports = function builder(entryFn, cliName){
+  console.log("cliname ?? ", cliName);
+
   cliName = cliName || 'my-cli';
 
   let outputDir = `${cliName}_output`;

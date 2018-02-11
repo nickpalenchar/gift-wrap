@@ -25,5 +25,4 @@ if(!shelljs.ls('/usr/local').includes('giftwrap')){
   command = 'init';
   args = [];
 }
-console.log('TIME TO RUN WITH THESE ARGS ', args);
 fork(path.join(__dirname, command), args);
