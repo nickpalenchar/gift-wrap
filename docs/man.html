@@ -27,7 +27,7 @@ giftwrap init [-f]
 <h4>Description</h4>
 
 Running init will initialize giftwrap so that it can save cli's you create locally (as well as other options). This command will fail if giftwrap has already been initialized (unless <code>-f</code> is used, see below).
-
+<br/>
 <table>
   <tr>
     <td style="width: 48px;"><code>-f</code></td>
@@ -56,4 +56,18 @@ giftwrap [build] [--name=name] [--file=...path]
 <h4>Description</h4>
 
 Running <code>giftwrap</code> in the root of where a file containing a javascript function is will begin the process of converting a javascript function into a cli, which can be ran in the terminal or published to npm. Interactive prompts will help giftwrap determine how the function should be converted. This is the heart of giftwrap!
+<br/>
+<table>
+  <tr>
+    <td style="width: 48px;"><code>--name</code></td>
+    <td>Specify what the cli will be named. When omitted, the user is prompted for a cli name during the build process.</td>
+  </tr>
+  <tr>
+    <td><code>--file</code></td>
+    <td>Specify the path to the javascript file that should be read, rather than reading javascript files from the location where giftwrap is ran. Absolute or relative paths are accepted.</td>
+  </tr>
+</table>
 
+<h4>Notes</h4>
+
+For convience, running <code>giftwrap</code> implicitly runs <code>giftwrap build</code> (except when giftwrap is not initialized). So <code>build</code> can always be omitted.
