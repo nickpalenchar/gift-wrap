@@ -1,6 +1,6 @@
 {
   "name": "@npalenchar/giftwrap",
-  "version": "0.9.8-beta",
+  "version": "0.9.81-beta",
   "description": "Interactive CLI to publish functions as their own CLI (meta I know)",
   "main": "index.js",
   "bin": {
