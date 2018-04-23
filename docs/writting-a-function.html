@@ -9,7 +9,6 @@ The following outlines acceptable ways to write a function for giftwrap to parse
 <h2>Compatible function formats</h2>
 
 <h3>Function declaration (named or anonymous)</h3>
-
 <pre>
 <code class="js">
 function hello (name) { console.log("hello" + name) }
@@ -18,3 +17,32 @@ function (name) { console.log("hello" + name) }
 </code>
 </pre>
 
+<h3>Function expression (var, let, or const)</h3>
+<h5>NOTE: variable names will not be mentioned in the CLI if the function name is anonymous</h5>
+
+<pre>
+<code class="js">
+// will find anonymous function
+var hello = function (name) { console.log("hello" + name) }
+
+// will find function named `hello`
+let helloAgain = function hello (name) { console.log("hello" + name) }
+
+const helloOneMoreTime = function (name) { console.log("hello" + name) }
+</code>
+</pre>
+
+<h3>NodeJS `module.exports` expression</h3>
+<pre>
+<code class="js">
+// ... random code ... //
+
+module.exports = function (name) { console.log("hello" + name) }
+
+// possibly more random code
+</code>
+</pre>
+
+<h2>Compatible file structures - Vanilla JS vs NodeJS structure</h2>
+
+<i>Coming soon!</i>
