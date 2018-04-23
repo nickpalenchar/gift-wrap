@@ -46,7 +46,7 @@ else {
   if (!jsFiles.length) {
     console.log(chalk.red("ERROR: No file found!"));
     console.log(chalk.grey("No JS files were found in the root of your directory (The directory you're currently in is "),
-      chalk.yellow(shelljs.pwd().stdout));
+      chalk.yellow(shelljs.pwd().stdout), chalk.grey(")"));
     console.log(chalk.grey("Run giftwrap in the directory that contains the js file you want to use (the file should not be in a subdirectory)"));
     console.log(chalk.grey("You can also use"), chalk.yellow("--file=path/to/file.js"), chalk.grey("to explicity specify which file should be used\n"));
     process.exit(1);
@@ -71,7 +71,6 @@ else {
 
 function unpackFunction(absolutePath) {
   // takes the absolute path of the js file and attempts to find the source function to be used.
-
   if (!fs.existsSync(absolutePath)) {
     console.log(chalk.red("ERROR: FILE NOT FOUND. Could not find the file located at "),
       chalk.yellow(absolutePath), chalk.red(". Make sure you're using the right path."));
