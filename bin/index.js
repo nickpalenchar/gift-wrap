@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 let { fork, exec, spawn } = require('child_process'),
   path = require('path'),
   statSync = require('fs').statSync,

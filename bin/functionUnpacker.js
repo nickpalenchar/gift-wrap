@@ -6,6 +6,7 @@ let fs = require('fs');
 module.exports = function functionUnpacker(filePath){
   let fn;
   try{
+    console.log('uuuUUU')
     fn = require(filePath);
   }catch(e){
     console.log(chalk.red("PARSE ERROR: Could not parse source file correctly"));
@@ -36,6 +37,14 @@ module.exports = function functionUnpacker(filePath){
   else {
     // case 3: vanilla javascript file. Concat into node module and then recursively call to require in.
     let template = "module.exports = " + shelljs.cat(filePath).stdout;
+
+    // parse out varaible expression (so we don't get something like module.exports = let fn = funciton...)
+    template = template.replace(/(module\.exports\s=\s*)((:?let|var|const).*?=)/, '$1');
+
+    // reconstruct fat-arrow function
+
+
+    console.log("TEMPLATE ", template);
     exec('rm -rf ._temp && mkdir ._temp');
     let wd = shelljs.pwd().stdout;
     fs.writeFileSync(`${wd}/._temp/fn.js`, template);
