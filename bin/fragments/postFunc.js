@@ -33,6 +33,16 @@ args.forEach((arg,i) => {
 
 });
 
+// check for files in the current directory, and use as input if they exist
+
+let fs = require('fs');
+let { exec } = require('child_process');
+let files = fs.readdirSync(__dirname)
+fnArgs = fnArgs.map(arg => {
+
+});
+
+
 //TODO: get text if a filepath is specified
 
 //invoke the function via the ref
