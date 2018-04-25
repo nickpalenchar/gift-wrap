@@ -34,12 +34,10 @@ args.forEach((arg,i) => {
 });
 
 // check for files in the current directory, and use as input if they exist
-
-let fs = require('fs');
-let { exec } = require('child_process');
-let files = fs.readdirSync(__dirname)
-fnArgs = fnArgs.map(arg => {
-
+let wd = execSync('pwd').toString('utf8').replace('\n','');
+let files = execSync('ls').toString('utf8').split('\n').slice(0,-1).filter(file => {
+    //console.log(path.join(wd, file));
+    return lstatSync(path.join(wd,file)).isFile()
 });
 
 
