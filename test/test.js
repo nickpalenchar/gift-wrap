@@ -1,9 +1,9 @@
 let { exec, execSync } = require('child_process');
-let { lstatSync, readFileSync } = require('fs');
+let { lstatSync, readFileSync, existsSync } = require('fs');
 let path = require('path');
 
 
-let fnArgs = ['notAfile', '../gift-wrap/README.md', 'HELLOOO'];
+let fnArgs = ['notAfile', '../README.md', 'actuallyAFile'];
 
 let wd = execSync('pwd').toString('utf8').replace('\n','');
 let files = execSync('ls').toString('utf8').split('\n').slice(0,-1).filter(file => {
@@ -12,16 +12,43 @@ let files = execSync('ls').toString('utf8').split('\n').slice(0,-1).filter(file 
 });
 
 fnArgs = fnArgs.map(name => {
+
+    // design choice. If it starts with a `~`, `/`, `.`, or `..`, it will only be considered as a file path.
+    // if the file does not exist, it will error. EVEN if it expected a string that began with one of these
+    // characters.
+
     // CASE 1: ABSOLUTE PATH
     // assume path exists, if not, throw error.
     if(/^[\/~]/.test(name)) {
         console.log('ABSOLUTE');
-        return readFileSync(name, 'utf8');
+        if (existsSync(name)) {
+            return readFileSync(name, 'utf8').toString();
+        }
+        console.log("Error: Cannot find file");
+        process.exit(1);
     }
     // CASE 2: POTENTIAL RELATIVE PATH
-    if(files.includes(name) || /^\.{1,2}\.+/.test(name)){
+    if(/^\.{1,2}\.+/.test(name)){
+        console.log("><U>><U><U<></U>", name);
         // @TODO still need to check and make sure.
+        let pathToFile = path.join(wd, name);
+
+        if (existsSync(pathToFile)) {
+            return readFileSync(pathToFile).toString();
+        }
+        console.log("Error: Cannot find file");
+        process.exit(1);
     }
+    // CASE 3: LOOKS LIKE STRING, IS A FILE IN CURRENT DIRECTORY
+    let p = path.join(wd,name);
+
+    console.log("<>>>> ", p);
+
+    if (existsSync(path.join(wd,name))) {
+        return readFileSync(path.join(wd,name)).toString();
+    }
+    // CASE DEFAULT
+    return name;
 
 });
 
