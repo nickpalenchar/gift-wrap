@@ -1,3 +1,3 @@
-var hello = () => {
-  console.log('hello');
+var hello = (name) => {
+  console.log('hello', name);
 }

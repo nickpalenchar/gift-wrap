@@ -1,13 +1,21 @@
+#!/usr/bin/env node
+let args = process.argv.slice(2);
+
+// concat the function.
+
+//get params and construct arguments object
+var genericFn = (name) => {
+  console.log('hello', name);
+};
+var fnRef = genericFn
 ; // empty block to ensure final statement in user program doesn't collide with first statement here
 
 // construct the arguments object from params
-let path = require('path');
-let {existsSync, readFileSync } = require('fs');
 
 let fnArgs = [],
   argsObject = {};
 
-let paramNames = (fnRef.toString().match(/function.*\((.*)\)/) || ['',''])[1].replace(/\s/g, "").split(',');
+let paramNames = (fnRef.toString().match(/function.*\((.*)\)/) || [])[1].replace(/\s/g, "").split(',');
 
 paramNames.forEach(paramName => argsObject[paramName] = undefined);
 
