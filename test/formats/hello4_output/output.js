@@ -1,9 +1,18 @@
+#!/usr/bin/env node
+let args = process.argv.slice(2);
+
+// concat the function.
+
+//get params and construct arguments object
+var genericFn = (name) => {
+  console.log('hello', name);
+};
+var fnRef = genericFn
 ; // empty block to ensure final statement in user program doesn't collide with first statement here
 
 // construct the arguments object from params
 let path = require('path');
 let {existsSync, readFileSync } = require('fs');
-let {execSync} = require('child_process');
 
 let fnArgs = [],
   argsObject = {};
@@ -38,7 +47,7 @@ args.forEach((arg, i) => {
 });
 
 fnArgs = fnArgs.map(name => {
-  let wd = execSync('pwd').toString('utf8').replace('\n', '');
+
   // design choice. If it starts with a `~`, `/`, `.`, or `..`, it will only be considered as a file path.
   // if the file does not exist, it will error. EVEN if it expected a string that began with one of these
   // characters.
